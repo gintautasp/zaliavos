@@ -1,0 +1,8 @@
+1. radijo dažnių lentelė
+2. begimo trasos
+	trasa, rungtis, varzybos -> Vilius, Tadas, Laurynas
+3. žaliavos  -> gaminiai
+	geležies ruda, -> plienas    Tadas, Laurynas, Marius
+
+    žaliavos <-> šaltiniai
+	
