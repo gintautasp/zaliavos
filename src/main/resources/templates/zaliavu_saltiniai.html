@@ -18,13 +18,12 @@
     var dialog, form,
      	   
       // From http://www.whatwg.org/specs/web-apps/current-work/multipage/states-of-the-type-attribute.html#e-mail-state-%28type=email%29
+      // platuma_centrines_dalies	ilguma_centrines_dalies	kiekis_zaliavos_vertinamas
       pav = $( "#pav" ),
-      flag_skirtas_galutiniam_vartojimui = $( "#flag_skirtas_galutiniam_vartojimui" ),
-      vnt_mato = $( "#vnt_mato" ),
-      kiekis = $( "#kiekis" ),
-      kaina_uz_kiekio_vnt =  $( "#kaina_uz_kiekio_vnt" ),
-      aprasymas =  $( "#aprasymas" ),
-      allFields = $( [] ).add( pav ).add( flag_skirtas_galutiniam_vartojimui ).add( vnt_mato ).add ( kiekis ).add ( kaina_uz_kiekio_vnt ).add ( aprasymas ) ,
+      platuma_centrines_dalies = $( "#platuma_centrines_dalies" ),
+      ilguma_centrines_dalies = $( "#ilguma_centrines_dalies" ),
+      kiekis_zaliavos_vertinamas = $( "#kiekis_zaliavos_vertinamas" ),
+      allFields = $( [] ).add( pav ).add( platuma_centrines_dalies ).add( ilguma_centrines_dalies ).add ( kiekis_zaliavos_vertinamas ) ,
       tips = $( ".validateTips" );
  
     function pridetiZaliava() {
@@ -35,16 +34,16 @@
        	  // id pav flag_skirtas_galutiniam_vartojimui vnt_mato kiekis kaina_uz_kiekio_vnt aprasymas
       
       valid = valid && checkLength( tips, pav, "Pavadinimas", 3, 255 );
-      valid = valid && checkLength( tips, flag_skirtas_galutiniam_vartojimui, "Skirtas galutiniam vartojimui", 1, 1 );
-      valid = valid && checkLength( tips, vnt_mato, "Mato vnt.", 1, 255 );
-      valid = valid && checkLength( tips, kiekis, "Kiekis", 1, 255 );     
-      valid = valid && checkLength( tips, kaina_uz_kiekio_vnt, "Kaina už kiekio vnt.", 1, 12 );
-      valid = valid && checkLength( tips, aprasymas, "Aprašymas", 10, 2000 );      
+      valid = valid && checkLength( tips, platuma_centrines_dalies, "platuma centrinės dalies", 6, 10 );
+      valid = valid && checkLength( tips, ilguma_centrines_dalies, "ilguma centrinėsędalies", 6, 10 );
+      valid = valid && checkLength( tips, kiekis_zaliavos_vertinamas, "Kiekis žaliavos vertinamas", 6, 12 );     
+   
  
       valid = valid && checkRegexp( tips, pav, /^[A-ZĄČĘĖĮŠŲŪŽ]([0-9a-ząčęėįšųūž_\s])+$/i, "Pavadinime turi būti a-z ąčęėįšųūž, 0-9, pabraukimai, tarpai ir turi prasidėti didžąją raide" );
-      valid = valid && checkRegexp( tips, vnt_mato, /^[a-ząčęėįšųūžA-ZĄČĘĖĮŠŲŪŽ]([0-9a-ząčęėįšųūž_\s])+$/i, "Mato vnt.  turi būti a-z ąčęėįšųūž, 0-9, pabraukimai, tarpai ir turi prasidėti didžąją raide" );      
-      valid = valid && checkRegexp( tips, kiekis, /^([0-9.eE+-])+$/, "Kiekyje gali būti : 0-9 . eE+-" );
-      valid = valid && checkRegexp( tips, kaina_uz_kiekio_vnt, /^([0-9.])+$/, "Kiekyje gali būti : 0-9 ." );      
+      valid = valid && checkRegexp( tips, platuma_centrines_dalies, /^([0-9.])+$/, "platuma centrinės dalies gali būti simboliai : 0-9 ." );
+      valid = valid && checkRegexp( tips, ilguma_centrines_dalies, /^([0-9.])+$/, "ilguma centrinės dalies gali būti simboliai : 0-9 ." );     
+      valid = valid && checkRegexp( tips, kiekis_zaliavos_vertinamas, /^([0-9.eE+-])+$/, "Kiekis žalaivos vertinamas gali būti simboliai : 0-9 . eE+-" );
+       
  
       if ( valid ) {
       
@@ -206,66 +205,57 @@
 				id
 			</th>
 			<th>
+				id<br>
+				žaliavos
+			</th>			
+			<th>
 				Pavadinimas
 			</th>
 			<th>
-				Skirtas<br>galutiniam<br>vartojimui
+				Platuma
 			</th>
 			<th>				
-				Mato<br>vnt.
+				Ilguma
 			</th>
 			<th>				
-				Kiekis
-			</th>
-			<th>
-				Kaina<br>uz<br>kiekio<br>vnt.
-			</th>
-			<th>				
-				Aprašymas
+				Kiekis<br>
+				vertinamas
 			</th>
 			<th>
 				Veiksmai<br>
 				<button id="zaliavos-dialogas">Nauja</button>
 			</th>
 		</tr>
-		<tr th:each="zaliava : ${zaliavos}">
-			<td th:text="${zaliava.getId()}"></td>
-			<td th:text="${zaliava.getPav()}"></td>
-			<td th:text="${zaliava.getFlag_skirtas_galutiniam_vartojimui()} ? '&check;' : '&cross;' "></td>
-			<td th:text="${zaliava.getVnt_mato()}"></td>
-			<td th:text="${zaliava.getKiekis()}"></td>
-			<td th:text="${zaliava.getKaina_uz_kiekio_vnt()}"></td>
-			<td th:text="${zaliava.getAprasymas()}"></td>
+		<tr th:each="zaliavos_saltinis : ${zaliavu_saltiniai}">
+			<td th:text="${zaliavos_saltinis.getId()}"></td>
+			<td th:text="${zaliavos_saltinis.getId_zaliavos()}"></td>			
+			<td th:text="${zaliavos_saltinis.getPav()}"></td>
+			<td th:text="${zaliavos_saltinis.getPlatuma_centrines_dalies()}"></td>
+			<td th:text="${zaliavos_saltinis.getIlguma_centrines_dalies()}"></td>
+			<td th:text="${zaliavos_saltinis.getKiekis_zaliavos_vertinamas()}"></td>
 			<td>
-				<button class="keisti_zaliava ui-button ui-corner-all ui-widget" th:data-id="${zaliava.getId()}">Keisti</button>
-				<button class="salinti_zaliava ui-button ui-corner-all ui-widget" th:data-id="${zaliava.getId()}">Šalinti</button>				
+				<button class="keisti_zaliava ui-button ui-corner-all ui-widget" th:data-id="${zaliavos_saltinis.getId()}">Keisti</button>
+				<button class="salinti_zaliava ui-button ui-corner-all ui-widget" th:data-id="${zaliavos_saltinis.getId()}">Šalinti</button>				
 			</td>									
 		</tr>					
 		</tr>
 	</table>
 	</article>
-	<div id="data_form" title="Žaliavos duomenys">
+	<div id="data_form" title="Žaliavos šaltionio duomenys">
 		<p class="validateTips">All form fields are required.</p>	
 		<form action="" method="POST">
 			<fieldset>
 			<label for="pav">pavadinimas</label>
-			<input type="text" name="pav" id="pav" value="Geležies rūda">	
-
-			<input type="checkbox" name="flag_skirtas_galutiniam_vartojimui"  id="flag_skirtas_galutiniam_vartojimui"  value="1"> - <label for="flag_skirtas_galutiniam_vartojimui">skirtas galutiniam vartojimui</label>
+			<input type="text" name="pav" id="pav" value="Varėnos 3 rūdos klodai">	
 			
-			<label for="vnt_mato">mato vnt.</label>
-			<input type="text" name="vnt_mato" id="vnt_mato" value="kg">			
+			<label for="platuma_centrines_dalies">platuma centrinės_dalies</label>
+			<input type="text" name="platuma_centrines_dalies" id="platuma_centrines_dalies" value="53.74677">			
+		
+			<label for="ilguma_centrines_dalies">ilguma centrinės dalies</label> 
+			<input type="text" name="ilguma_centrines_dalies" id="ilguma_centrines_dalies" value="23.84588">		
 			
-			<label for="kiekis">kiekis</label>	
-			<input type="text" name="kiekis" id="kiekis" value="1000">
-			
-			<label for="kaina_uz_kiekio_vnt">kaina už kiekio vnt.</label> 
-			<input type="text" name="kaina_uz_kiekio_vnt" id="kaina_uz_kiekio_vnt" value="100">
-			
-			<label for="aprasymas">aprašymas</label>	
-			<textarea name="aprasymas" id="aprasymas">
-			balų rūda
-			</textarea>
+			<label for="kiekis_zaliavos_vertinamas">kiekis žaliavos verinamas</label>	
+			<input type="text" name="kiekis_zaliavos_vertinamas" id="kiekis_zaliavos_vertinamas" value="632569">
 	
 			<input type="hidden" name="id" id="id" value="0">
 				
