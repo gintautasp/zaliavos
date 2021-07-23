@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
 @Entity
@@ -21,6 +23,11 @@ public class GaminiaiZaliavos {
     private Integer id_zaliavos;	
     private Double kiekis_zaliavos;
     private Double kiekis_gaminiu;
+    
+    @ManyToOne
+    @JoinColumn(name="id_gaminio", insertable=false, updatable=false)
+    private Gaminiai gaminiai;
+    
     
 	@Transient
 	private ArrayList<String> errors;    
@@ -113,6 +120,16 @@ public class GaminiaiZaliavos {
 
 	public void setErrors(ArrayList<String> errors) {
 		this.errors = errors;
+	}
+
+	
+	
+	public Gaminiai getGaminiai() {
+		return gaminiai;
+	}
+
+	public void setGaminiai(Gaminiai gaminiai) {
+		this.gaminiai = gaminiai;
 	}
 
 	@Override

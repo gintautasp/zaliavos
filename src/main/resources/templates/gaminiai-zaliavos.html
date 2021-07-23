@@ -205,8 +205,7 @@
 				id
 			</th>
 			<th>
-				id<br>
-				gaminio
+				Gaminys
 			</th>
 			<th>				
 				Kiekis<br>
@@ -223,7 +222,7 @@
 		</tr>
 		<tr th:each="zaliavos_gaminys : ${gaminiai_zaliavos}">
 			<td th:text="${zaliavos_gaminys.getId()}"></td>
-			<td th:text="${zaliavos_gaminys.getId_gaminio()}"></td>			
+			<td th:text="${zaliavos_gaminys.getGaminiai().getPav()}"></td>			
 			<td th:text="${zaliavos_gaminys.getKiekis_zaliavos()}"></td>
 			<td th:text="${zaliavos_gaminys.getKiekis_gaminiu()}"></td>
 			<td>
@@ -240,7 +239,9 @@
 			<fieldset>					
 		
 			<label for="id_gaminio">id  gaminio</label> 
-			<input type="text" name="id_gaminio" id="id_gaminio" value="1">		
+			<select name="id_gaminio" id="id_gaminio" value="1">
+				<option th:each=" gaminys : ${gaminiai}" th:text="${gaminys.getPav()}" th:value="${gaminys.getId()}"></option>
+			</select>		
 			
 			<label for="kiekis_zaliavos">kiekis žaliavos</label>	
 			<input type="text" name="kiekis_zaliavos" id="kiekis_zaliavos" value="1000">

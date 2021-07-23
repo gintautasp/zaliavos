@@ -17,6 +17,9 @@ public class PageController {
 	
 	@Autowired
 	private ZaliavosRepository zaliavos_repository;		
+
+	@Autowired
+	private GaminiaiRepository gaminiai_repository;	
 	
 	@Autowired
 	private GaminiaiZaliavosRepository gaminiai_zaliavos_repository;			
@@ -85,13 +88,13 @@ public class PageController {
 		}
 		
 		Iterable<GaminiaiZaliavos> lst_gaminiai_zaliavos = gaminiai_zaliavos_repository.findAll();
-		
+		/*
 		for( GaminiaiZaliavos gaminys_zaliava : lst_gaminiai_zaliavos ) {
 			System.out.println( gaminys_zaliava.toString() );
 		}
+		*/
 		
-		
-		
+		model.addAttribute( "gaminiai", gaminiai_repository.findAll() );
 		model.addAttribute("gaminiai_zaliavos", lst_gaminiai_zaliavos );
 		
 		return "gaminiai-zaliavos";
@@ -112,6 +115,22 @@ public class PageController {
 		
 		return zaliava;
 	}
+	
+	@RequestMapping(path="/gaminiai", method={ RequestMethod.GET, RequestMethod.POST })
+	public @ResponseBody Iterable<Gaminiai> gaminiai(/* @RequestParam(name="id", required=true, defaultValue="0") Integer id, Model model */) {
+		
+		// Gaminiai gaminiai = new Gaminiai();
+		/*
+		if ( id > 0 ) {
+			
+			zaliava = zaliavos_repository.findById( id ).get();
+		}
+		*/
+		BlaBlaMessenger bla_bla_messenger = new BlaBlaMessenger();
+		System.out.println( bla_bla_messenger.sayBlabla() );
+		
+		return gaminiai_repository.findAll();
+	}	
 	
 	@RequestMapping(path="/salinti-zaliava", method={ RequestMethod.GET, RequestMethod.POST })
 	public @ResponseBody String salintiZaliava(@RequestParam(name="id", required=true, defaultValue="0") Integer id, Model model) {
