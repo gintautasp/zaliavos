@@ -94,7 +94,7 @@ public class PageController {
 		}
 		*/
 		
-		model.addAttribute( "gaminiai", gaminiai_repository.findAll() );
+		// model.addAttribute( "gaminiai", gaminiai_repository.findAll() ); - tarkim negalim, reikia daryti dinamiškai
 		model.addAttribute("gaminiai_zaliavos", lst_gaminiai_zaliavos );
 		
 		return "gaminiai-zaliavos";

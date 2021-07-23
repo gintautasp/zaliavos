@@ -19,10 +19,10 @@
      	   
       // From http://www.whatwg.org/specs/web-apps/current-work/multipage/states-of-the-type-attribute.html#e-mail-state-%28type=email%29
       // platuma_centrines_dalies	ilguma_centrines_dalies	kiekis_zaliavos_vertinamas
-      id_gaminio = $( "#id_gaminio" ),
+      // id_gaminio = $( "#id_gaminio" ),
       kiekis_zaliavos = $( "#kiekis_zaliavos" ),
       kiekis_gaminiu = $( "#kiekis_gaminiu" ),      
-      allFields = $( [] ).add( id_gaminio ).add( kiekis_zaliavos ).add ( kiekis_gaminiu ) ,
+      allFields = $( [] ).add( kiekis_zaliavos ).add ( kiekis_gaminiu ) ,
       tips = $( ".validateTips" );
  
     function pridetiZaliavosGamini() {
@@ -33,12 +33,12 @@
        	  // id pav flag_skirtas_galutiniam_vartojimui vnt_mato kiekis kaina_uz_kiekio_vnt aprasymas
       
 
-      valid = valid && checkLength( tips, id_gaminio, "Gaminio id", 1, 10 );
-      valid = valid && checkLength( tips, kiekis_zaliavos, "Kiekis žaliavos", 6, 12 );
-      valid = valid && checkLength( tips, kiekis_gaminiu, "Kiekis gaminių", 6, 12 );     
+      // valid = valid && checkLength( tips, id_gaminio, "Gaminio id", 1, 10 );
+      valid = valid && checkLength( tips, kiekis_zaliavos, "Kiekis žaliavos", 2, 12 );
+      valid = valid && checkLength( tips, kiekis_gaminiu, "Kiekis gaminių", 2, 12 );     
    
  
-      valid = valid && checkRegexp( tips, id_gaminio, /^([0-9])+$/, "Gaminio id - gali būti simboliai : 0-9 " );     
+      // valid = valid && checkRegexp( tips, id_gaminio, /^([0-9])+$/, "Gaminio id - gali būti simboliai : 0-9 " );     
       valid = valid && checkRegexp( tips, kiekis_zaliavos, /^([0-9.eE+-])+$/, "Kiekis žaliavos - gali būti simboliai : 0-9 . eE+-" );
       valid = valid && checkRegexp( tips, kiekis_gaminiu, /^([0-9.eE+-])+$/, "Kiekis gaminių - gali būti simboliai : 0-9 . eE+-" );      
        
@@ -51,27 +51,47 @@
       return valid;
     }
  
-    dialog = $( "#data_form" ).dialog({
-      autoOpen: false,
-      height: 500,
-      width: 450,
-      modal: true,
-      buttons: {
-        "Saugoti": pridetiZaliavosGamini,
-        Cancel: function() {
-          dialog.dialog( "close" );
-        }
-      },
-      close: function() {
-        form[ 0 ].reset();
-        allFields.removeClass( "ui-state-error" );
-      }
-    });
- 
-    form = dialog.find( "form" );
+
+ 	$( "#data_form" ).hide();
+
  
     $( "#zaliavos-gaminio-dialogas" ).button().on( "click", function() {
-      dialog.dialog( "open" );
+    	
+     	$.ajax({
+		 	url: '/gaminiai' 							// ?id=' + id
+		 
+		}).done( function( gaminiai ) {   	
+		
+			selektas = '<select name="id_gaminio" id="id_gaminio" value="0">'
+			
+			for ( i = 0; i < gaminiai.length; i++ ) {
+				
+				selektas += '<option value="' + gaminiai [ i ].id + '">'  + gaminiai [ i ].pav + '</option>';
+			}
+			selektas += '</select>'
+			
+			$( '#select_place' ).html( selektas );
+			
+		    dialog = $( "#data_form" ).dialog({
+		      autoOpen: false,
+		      height: 500,
+		      width: 450,
+		      modal: true,
+		      buttons: {
+		        "Saugoti": pridetiZaliavosGamini,
+		        Cancel: function() {
+		          dialog.dialog( "close" );
+		        }
+		      },
+		      close: function() {
+		        form[ 0 ].reset();
+		        allFields.removeClass( "ui-state-error" );
+		      }
+		    }); 
+		   form = dialog.find( "form" );     
+	       dialog.dialog( "open" );			
+			
+		});
     });
     
     $( ".keisti_zaliavos-gamini" ).each ( function() {
@@ -238,10 +258,9 @@
 		<form action="" method="POST">
 			<fieldset>					
 		
-			<label for="id_gaminio">id  gaminio</label> 
-			<select name="id_gaminio" id="id_gaminio" value="1">
-				<option th:each=" gaminys : ${gaminiai}" th:text="${gaminys.getPav()}" th:value="${gaminys.getId()}"></option>
-			</select>		
+			<label for="id_gaminio">gaminys</label> 
+			<div id="select_place">
+			</div>		
 			
 			<label for="kiekis_zaliavos">kiekis žaliavos</label>	
 			<input type="text" name="kiekis_zaliavos" id="kiekis_zaliavos" value="1000">
