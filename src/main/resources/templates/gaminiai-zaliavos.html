@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>žaliavos kortelė</title>
+	<title>žaliavos gaminių kortelė</title>
 	<link rel="stylesheet" href="main.css">
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<link rel="stylesheet" href="jquery-ui.css">
@@ -19,30 +19,28 @@
      	   
       // From http://www.whatwg.org/specs/web-apps/current-work/multipage/states-of-the-type-attribute.html#e-mail-state-%28type=email%29
       // platuma_centrines_dalies	ilguma_centrines_dalies	kiekis_zaliavos_vertinamas
-      pav = $( "#pav" ),
-      platuma_centrines_dalies = $( "#platuma_centrines_dalies" ),
-      ilguma_centrines_dalies = $( "#ilguma_centrines_dalies" ),
-      kiekis_zaliavos_vertinamas = $( "#kiekis_zaliavos_vertinamas" ),
-      allFields = $( [] ).add( pav ).add( platuma_centrines_dalies ).add( ilguma_centrines_dalies ).add ( kiekis_zaliavos_vertinamas ) ,
+      id_gaminio = $( "#id_gaminio" ),
+      kiekis_zaliavos = $( "#kiekis_zaliavos" ),
+      kiekis_gaminiu = $( "#kiekis_gaminiu" ),      
+      allFields = $( [] ).add( id_gaminio ).add( kiekis_zaliavos ).add ( kiekis_gaminiu ) ,
       tips = $( ".validateTips" );
  
-    function pridetiZaliava() {
+    function pridetiZaliavosGamini() {
     
       var valid = true;
       allFields.removeClass( "ui-state-error" );
       
        	  // id pav flag_skirtas_galutiniam_vartojimui vnt_mato kiekis kaina_uz_kiekio_vnt aprasymas
       
-      valid = valid && checkLength( tips, pav, "Pavadinimas", 3, 255 );
-      valid = valid && checkLength( tips, platuma_centrines_dalies, "platuma centrinės dalies", 6, 10 );
-      valid = valid && checkLength( tips, ilguma_centrines_dalies, "ilguma centrinėsędalies", 6, 10 );
-      valid = valid && checkLength( tips, kiekis_zaliavos_vertinamas, "Kiekis žaliavos vertinamas", 6, 12 );     
+
+      valid = valid && checkLength( tips, id_gaminio, "Gaminio id", 1, 10 );
+      valid = valid && checkLength( tips, kiekis_zaliavos, "Kiekis žaliavos", 6, 12 );
+      valid = valid && checkLength( tips, kiekis_gaminiu, "Kiekis gaminių", 6, 12 );     
    
  
-      valid = valid && checkRegexp( tips, pav, /^[A-ZĄČĘĖĮŠŲŪŽ]([0-9a-ząčęėįšųūž_\s])+$/i, "Pavadinime turi būti a-z ąčęėįšųūž, 0-9, pabraukimai, tarpai ir turi prasidėti didžąją raide" );
-      valid = valid && checkRegexp( tips, platuma_centrines_dalies, /^([0-9.])+$/, "platuma centrinės dalies gali būti simboliai : 0-9 ." );
-      valid = valid && checkRegexp( tips, ilguma_centrines_dalies, /^([0-9.])+$/, "ilguma centrinės dalies gali būti simboliai : 0-9 ." );     
-      valid = valid && checkRegexp( tips, kiekis_zaliavos_vertinamas, /^([0-9.eE+-])+$/, "Kiekis žalaivos vertinamas gali būti simboliai : 0-9 . eE+-" );
+      valid = valid && checkRegexp( tips, id_gaminio, /^([0-9])+$/, "Gaminio id - gali būti simboliai : 0-9 " );     
+      valid = valid && checkRegexp( tips, kiekis_zaliavos, /^([0-9.eE+-])+$/, "Kiekis žaliavos - gali būti simboliai : 0-9 . eE+-" );
+      valid = valid && checkRegexp( tips, kiekis_gaminiu, /^([0-9.eE+-])+$/, "Kiekis gaminių - gali būti simboliai : 0-9 . eE+-" );      
        
  
       if ( valid ) {
@@ -59,7 +57,7 @@
       width: 450,
       modal: true,
       buttons: {
-        "Saugoti": pridetiZaliava,
+        "Saugoti": pridetiZaliavosGamini,
         Cancel: function() {
           dialog.dialog( "close" );
         }
@@ -72,14 +70,14 @@
  
     form = dialog.find( "form" );
  
-    $( "#zaliavos-dialogas" ).button().on( "click", function() {
+    $( "#zaliavos-gaminio-dialogas" ).button().on( "click", function() {
       dialog.dialog( "open" );
     });
     
-    $( ".keisti_zaliava" ).each ( function() {
+    $( ".keisti_zaliavos-gamini" ).each ( function() {
     
     	$( this ).click( function() {
-    
+    		/*
     		id = $( this ).data( 'id' );
     		
     		$( '#id' ).val ( id );
@@ -106,6 +104,7 @@
 	    		
 	    		dialog.dialog( "open" );
     		});
+    		*/
     	});
     });
     
@@ -155,7 +154,7 @@
 	   });    
     
     $( '.salinti_zaliava' ).each ( function() {
-    
+    	/*
     	$( this ).click( function() {
     
     		id = $( this ).data( 'id' );
@@ -185,6 +184,7 @@
 	    		dialog_del.dialog( "open" );
     		});   	
     	});
+    	*/
     });
   });
   </script>	
@@ -192,7 +192,7 @@
 </head>
 <body>
 	<article>
-	<h3>Žaliavos</h3>
+	<h3>Žaliavos gaminiai</h3>
 	<table>
 		<tr th:each="klaida : ${errors}">
 			<td th:text="${klaida}">
@@ -206,61 +206,47 @@
 			</th>
 			<th>
 				id<br>
-				žaliavos
-			</th>			
-			<th>
-				Pavadinimas
-			</th>
-			<th>
-				Platuma
-			</th>
-			<th>				
-				Ilguma
+				gaminio
 			</th>
 			<th>				
 				Kiekis<br>
-				vertinamas
+				žaliavos
 			</th>
 			<th>				
-				Vertė<br>
-				vertinama
+				Kiekis<br>
+				gaminiu
 			</th>			
 			<th>
 				Veiksmai<br>
-				<button id="zaliavos-dialogas">Nauja</button>
+				<button id="zaliavos-gaminio-dialogas">Nauja</button>
 			</th>
 		</tr>
-		<tr th:each="zaliavos_saltinis : ${zaliavu_saltiniai}">
-			<td th:text="${zaliavos_saltinis.getId()}"></td>
-			<td th:text="${zaliavos_saltinis.getId_zaliavos()}"></td>			
-			<td th:text="${zaliavos_saltinis.getPav()}"></td>
-			<td th:text="${zaliavos_saltinis.getPlatuma_centrines_dalies()}"></td>
-			<td th:text="${zaliavos_saltinis.getIlguma_centrines_dalies()}"></td>
-			<td th:text="${zaliavos_saltinis.getKiekis_zaliavos_vertinamas()}"></td>
-			<td th:text="${(zaliavos_saltinis.getKiekis_zaliavos_vertinamas()/zaliavos_saltinis.getZaliavos().getKiekis())*zaliavos_saltinis.getZaliavos().getKaina_uz_kiekio_vnt()}"></td>
+		<tr th:each="zaliavos_gaminys : ${gaminiai_zaliavos}">
+			<td th:text="${zaliavos_gaminys.getId()}"></td>
+			<td th:text="${zaliavos_gaminys.getId_gaminio()}"></td>			
+			<td th:text="${zaliavos_gaminys.getKiekis_zaliavos()}"></td>
+			<td th:text="${zaliavos_gaminys.getKiekis_gaminiu()}"></td>
 			<td>
-				<button class="keisti_zaliava ui-button ui-corner-all ui-widget" th:data-id="${zaliavos_saltinis.getId()}">Keisti</button>
-				<button class="salinti_zaliava ui-button ui-corner-all ui-widget" th:data-id="${zaliavos_saltinis.getId()}">Šalinti</button>				
+				<button class="keisti_zaliava ui-button ui-corner-all ui-widget" th:data-id="${zaliavos_gaminys.getId()}">Keisti</button>
+				<button class="salinti_zaliava ui-button ui-corner-all ui-widget" th:data-id="${zaliavos_gaminys.getId()}">Šalinti</button>				
 			</td>									
 		</tr>					
 		</tr>
 	</table>
 	</article>
-	<div id="data_form" title="Žaliavos šaltionio duomenys">
+	<div id="data_form" title="Žaliavos gaminio duomenys">
 		<p class="validateTips">All form fields are required.</p>	
 		<form action="" method="POST">
-			<fieldset>
-			<label for="pav">pavadinimas</label>
-			<input type="text" name="pav" id="pav" value="Varėnos 3 rūdos klodai">	
-			
-			<label for="platuma_centrines_dalies">platuma centrinės_dalies</label>
-			<input type="text" name="platuma_centrines_dalies" id="platuma_centrines_dalies" value="53.74677">			
+			<fieldset>					
 		
-			<label for="ilguma_centrines_dalies">ilguma centrinės dalies</label> 
-			<input type="text" name="ilguma_centrines_dalies" id="ilguma_centrines_dalies" value="23.84588">		
+			<label for="id_gaminio">id  gaminio</label> 
+			<input type="text" name="id_gaminio" id="id_gaminio" value="1">		
 			
-			<label for="kiekis_zaliavos_vertinamas">kiekis žaliavos verinamas</label>	
-			<input type="text" name="kiekis_zaliavos_vertinamas" id="kiekis_zaliavos_vertinamas" value="632569">
+			<label for="kiekis_zaliavos">kiekis žaliavos</label>	
+			<input type="text" name="kiekis_zaliavos" id="kiekis_zaliavos" value="1000">
+			
+			<label for="kiekis_gaminiu">kiekis gaminiu</label>	
+			<input type="text" name="kiekis_gaminiu" id="kiekis_gaminiu" value="100">			
 	
 			<input type="hidden" name="id" id="id" value="0">
 				

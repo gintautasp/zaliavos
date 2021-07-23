@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
 @Entity
@@ -15,13 +17,15 @@ public class ZaliavuSaltiniai {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;		
     
-	
-    
 	public Integer id_zaliavos;
 	public String  pav;	
 	public Double platuma_centrines_dalies;	
 	public Double ilguma_centrines_dalies;
 	public Double kiekis_zaliavos_vertinamas;
+	
+	@ManyToOne
+	@JoinColumn(name = "id_zaliavos", insertable=false, updatable=false)
+	private Zaliavos zaliavos;
 	
 	@Transient
 	private ArrayList<String> errors;	
@@ -126,6 +130,14 @@ public class ZaliavuSaltiniai {
 
 	public void setErrors(ArrayList<String> errors) {
 		this.errors = errors;
+	}
+	
+	public Zaliavos getZaliavos() {
+		return zaliavos;
+	}
+
+	public void setZaliavos(Zaliavos zaliava) {
+		this.zaliavos = zaliava;
 	}
 
 	@Override

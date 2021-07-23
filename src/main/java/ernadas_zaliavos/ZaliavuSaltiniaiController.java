@@ -58,5 +58,13 @@ public class ZaliavuSaltiniaiController {
 		model.addAttribute("zaliavu_saltiniai", zaliavu_saltiniai_repository.findAll() );
 		
 		return "zaliavu_saltiniai";
-	}	
+	}
+	
+	@RequestMapping(path="/saltinis", method={ RequestMethod.GET, RequestMethod.POST })
+	public @ResponseBody ZaliavuSaltiniai saltinis(
+			@RequestParam(name="id", required=false, defaultValue="0") String id
+	) {
+	
+		return zaliavu_saltiniai_repository.findById( Integer.parseInt(id) ).get();
+	}		
 }

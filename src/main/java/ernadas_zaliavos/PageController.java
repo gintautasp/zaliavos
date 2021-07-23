@@ -1,5 +1,7 @@
 package ernadas_zaliavos;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +17,9 @@ public class PageController {
 	
 	@Autowired
 	private ZaliavosRepository zaliavos_repository;		
+	
+	@Autowired
+	private GaminiaiZaliavosRepository gaminiai_zaliavos_repository;			
 	
 	@RequestMapping(path="/zaliavos", method={ RequestMethod.GET, RequestMethod.POST })
 	public String zaliavos(
@@ -51,6 +56,46 @@ public class PageController {
 		
 		return "zaliavos";
 	}
+	
+	@RequestMapping(path="/gaminiai-zaliavos", method={ RequestMethod.GET, RequestMethod.POST })
+	public String gaminiaiZaliavos(
+			// id	id_gaminio	id_zaliavos	kiekis_zaliavos	kiekis_gaminiu	
+			@RequestParam(name="id", required=false, defaultValue="0") String id
+			, @RequestParam(name="id_gaminio", required=false, defaultValue="-") String id_gaminio
+			
+			, @RequestParam(name="id_zaliavos", required=false, defaultValue="0") String id_zaliavos
+			, @RequestParam(name="kiekis_zaliavos", required=false, defaultValue="") String kiekis_zaliavos	
+			, @RequestParam(name="kiekis_gaminiu", required=false, defaultValue="2") String kiekis_gaminiu
+			
+			, @RequestParam(name="saugoti", required=false, defaultValue="nesaugoti") String saugoti
+			, Model model
+			) {
+		
+		if ( ( saugoti != null ) && saugoti.equals ("saugoti") ) {
+			
+			GaminiaiZaliavos zaliavos_gaminys = new GaminiaiZaliavos (
+					id
+					, id_gaminio	
+					, id_zaliavos
+					, kiekis_zaliavos
+					, kiekis_gaminiu
+			);
+
+			gaminiai_zaliavos_repository.save( zaliavos_gaminys );
+		}
+		
+		Iterable<GaminiaiZaliavos> lst_gaminiai_zaliavos = gaminiai_zaliavos_repository.findAll();
+		
+		for( GaminiaiZaliavos gaminys_zaliava : lst_gaminiai_zaliavos ) {
+			System.out.println( gaminys_zaliava.toString() );
+		}
+		
+		
+		
+		model.addAttribute("gaminiai_zaliavos", lst_gaminiai_zaliavos );
+		
+		return "gaminiai-zaliavos";
+	}	
 	
 	@RequestMapping(path="/zaliava", method={ RequestMethod.GET, RequestMethod.POST })
 	public @ResponseBody Zaliavos zaliava(@RequestParam(name="id", required=true, defaultValue="0") Integer id, Model model) {
