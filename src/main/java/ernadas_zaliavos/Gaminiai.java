@@ -16,6 +16,7 @@ public class Gaminiai {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;	
     
+    private String tipas;
     private String pav;	
     private Integer flag_skirtas_galutiniam_vartojimui;
     private String vnt_mato;
@@ -75,6 +76,16 @@ public class Gaminiai {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	
+	
+	public String getTipas() {
+		return tipas;
+	}
+
+	public void setTipas(String tipas) {
+		this.tipas = tipas;
 	}
 
 	public String getPav() {

@@ -52,26 +52,8 @@
     }
  
 
- 	$( "#data_form" ).hide();
-
- 
-    $( "#zaliavos-gaminio-dialogas" ).button().on( "click", function() {
-    	
-     	$.ajax({
-		 	url: '/gaminiai' 							// ?id=' + id
-		 
-		}).done( function( gaminiai ) {   	
-		
-			selektas = '<select name="id_gaminio" id="id_gaminio" value="0">'
-			
-			for ( i = 0; i < gaminiai.length; i++ ) {
-				
-				selektas += '<option value="' + gaminiai [ i ].id + '">'  + gaminiai [ i ].pav + '</option>';
-			}
-			selektas += '</select>'
-			
-			$( '#select_place' ).html( selektas );
-			
+ 	// $( "#data_form" ).hide();
+ 	
 		    dialog = $( "#data_form" ).dialog({
 		      autoOpen: false,
 		      height: 500,
@@ -88,10 +70,33 @@
 		        allFields.removeClass( "ui-state-error" );
 		      }
 		    }); 
-		   form = dialog.find( "form" );     
-	       dialog.dialog( "open" );			
+		   form = dialog.find( "form" );  	
+
+	$( '#gaminiu_tipas' ).change ( function() {
+	
+		tipas = $( this ).val();
+	
+    	$.ajax({
+		 	url: '/gaminiai-pagal?tipas=' + tipas
+		 
+		}).done( function( gaminiai ) {   
+		
+			selektas = '<select name="id_gaminio" id="id_gaminio" value="0">'
 			
-		});
+			for ( i = 0; i < gaminiai.length; i++ ) {
+				
+				selektas += '<option value="' + gaminiai [ i ].id + '">'  + gaminiai [ i ].pav + '</option>';
+			}
+			selektas += '</select>'
+			
+			$( '#select_place' ).html( selektas );
+		});	
+	});
+
+ 
+    $( "#zaliavos-gaminio-dialogas" ).button().on( "click", function() {
+
+		dialog.dialog( "open" );	
     });
     
     $( ".keisti_zaliavos-gamini" ).each ( function() {
@@ -257,6 +262,13 @@
 		<p class="validateTips">All form fields are required.</p>	
 		<form action="" method="POST">
 			<fieldset>					
+
+		
+			<label for="gaminiu_tipas">gaminiu tipas</label>		
+			<select id="gaminiu_tipas">
+				<option value="statyba">statyba</option>
+				<option value="gamyba">gamyba</option>
+			</select>
 		
 			<label for="id_gaminio">gaminys</label> 
 			<div id="select_place">

@@ -186,6 +186,12 @@
     		});   	
     	});
     });
+    
+    $( '.realus_skaiciai' ).each( function() {
+    
+    	skaicius = $( this ).html();
+    	$( this ).html ( parseFloat ( skaicius ).toFixed ( 2 ) );
+    });
   });
   </script>	
 	
@@ -237,7 +243,7 @@
 			<td th:text="${zaliavos_saltinis.getPlatuma_centrines_dalies()}"></td>
 			<td th:text="${zaliavos_saltinis.getIlguma_centrines_dalies()}"></td>
 			<td th:text="${zaliavos_saltinis.getKiekis_zaliavos_vertinamas()}"></td>
-			<td th:text="${(zaliavos_saltinis.getKiekis_zaliavos_vertinamas()/zaliavos_saltinis.getZaliavos().getKiekis())*zaliavos_saltinis.getZaliavos().getKaina_uz_kiekio_vnt()}"></td>
+			<td class="realus_skaiciai" th:text="${(zaliavos_saltinis.getKiekis_zaliavos_vertinamas()/zaliavos_saltinis.getZaliavos().getKiekis())*zaliavos_saltinis.getZaliavos().getKaina_uz_kiekio_vnt()}"></td>
 			<td>
 				<button class="keisti_zaliava ui-button ui-corner-all ui-widget" th:data-id="${zaliavos_saltinis.getId()}">Keisti</button>
 				<button class="salinti_zaliava ui-button ui-corner-all ui-widget" th:data-id="${zaliavos_saltinis.getId()}">Šalinti</button>				

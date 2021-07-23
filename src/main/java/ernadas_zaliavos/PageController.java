@@ -130,6 +130,13 @@ public class PageController {
 		System.out.println( bla_bla_messenger.sayBlabla() );
 		
 		return gaminiai_repository.findAll();
+	}
+	
+	@RequestMapping(path="/gaminiai-pagal", method={ RequestMethod.GET, RequestMethod.POST })
+	public @ResponseBody Iterable<Gaminiai> gaminiaiPagalTipa(@RequestParam(name="tipas", required=true, defaultValue="0") String tipas ) {
+		
+		
+		return gaminiai_repository.findByTipas( tipas );
 	}	
 	
 	@RequestMapping(path="/salinti-zaliava", method={ RequestMethod.GET, RequestMethod.POST })
