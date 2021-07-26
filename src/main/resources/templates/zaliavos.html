@@ -194,6 +194,9 @@
 <body>
 	<article>
 	<h3>Žaliavos</h3>
+	<nav>
+		<a th:each="menu_item : ${lst_menu}" th:href="${menu_item.itemurl()}" th:text="${menu_item}"></a>
+	</nav>	
 	<table>
 		<tr th:each="klaida : ${errors}">
 			<td th:text="${klaida}">

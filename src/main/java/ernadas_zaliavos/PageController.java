@@ -12,6 +12,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import saltiniai.BlaBlaMessenger;
 
+/**
+ * 
+ * @author sesioliktas<br>
+ * Zaliavų svetainės puslapių pagrindinis kontroleris<br>
+ * zaliavų, zaliavų saltinių ir zaliavos gaminių crud sudarymui<br>
+ * zaliavų paieskos puslapio sudarymas<br>
+ */
 @Controller
 public class PageController {
 	
@@ -24,6 +31,19 @@ public class PageController {
 	@Autowired
 	private GaminiaiZaliavosRepository gaminiai_zaliavos_repository;			
 	
+	/**
+	 * Zaliavu lentelss Crud puslapio uzklausų metodas
+	 * @param id
+	 * @param String pav -  zaliavos pavadinimas
+	 * @param flag_skirtas_galutiniam_vartojimui
+	 * @param vnt_mato
+	 * @param kiekis
+	 * @param kaina_uz_kiekio_vnt
+	 * @param aprasymas
+	 * @param saugoti
+	 * @param model
+	 * @return String
+	 */
 	@RequestMapping(path="/zaliavos", method={ RequestMethod.GET, RequestMethod.POST })
 	public String zaliavos(
 			// id	pav	flag_skirtas_galutiniam_vartojimui	vnt_mato	kiekis	kaina_uz_kiekio_vnt	aprasymas	
@@ -56,10 +76,22 @@ public class PageController {
 			zaliavos_repository.save( zaliava );
 		}
 		model.addAttribute("zaliavos", zaliavos_repository.findAll() );
+		model.addAttribute( "lst_menu", Menu.values() );
 		
 		return "zaliavos";
 	}
 	
+	/**
+	 * Zaliavų saltinių Crud puslapio uzklausų metodas
+	 * @param id
+	 * @param id_gaminio
+	 * @param id_zaliavos
+	 * @param kiekis_zaliavos
+	 * @param kiekis_gaminiu
+	 * @param saugoti
+	 * @param model
+	 * @return String
+	 */
 	@RequestMapping(path="/gaminiai-zaliavos", method={ RequestMethod.GET, RequestMethod.POST })
 	public String gaminiaiZaliavos(
 			// id	id_gaminio	id_zaliavos	kiekis_zaliavos	kiekis_gaminiu	
@@ -94,11 +126,18 @@ public class PageController {
 		}
 		*/
 		
-		// model.addAttribute( "gaminiai", gaminiai_repository.findAll() ); - tarkim negalim, reikia daryti dinamiškai
+		// model.addAttribute( "gaminiai", gaminiai_repository.findAll() ); - tarkim negalim, reikia daryti dinamiskai
 		model.addAttribute("gaminiai_zaliavos", lst_gaminiai_zaliavos );
 		
 		return "gaminiai-zaliavos";
 	}	
+	
+	/**
+	 * vienos zaliavos duomenų paisiėmmas ajax'ui pagal id
+	 * @param id
+	 * @param model
+	 * @return Zaliavos
+	 */
 	
 	@RequestMapping(path="/zaliava", method={ RequestMethod.GET, RequestMethod.POST })
 	public @ResponseBody Zaliavos zaliava(@RequestParam(name="id", required=true, defaultValue="0") Integer id, Model model) {
@@ -115,7 +154,7 @@ public class PageController {
 		
 		return zaliava;
 	}
-	
+
 	@RequestMapping(path="/gaminiai", method={ RequestMethod.GET, RequestMethod.POST })
 	public @ResponseBody Iterable<Gaminiai> gaminiai(/* @RequestParam(name="id", required=true, defaultValue="0") Integer id, Model model */) {
 		
@@ -139,6 +178,12 @@ public class PageController {
 		return gaminiai_repository.findByTipas( tipas );
 	}	
 	
+	/**
+	 * Zaliavos salinimo ajax metodas
+	 * @param id
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(path="/salinti-zaliava", method={ RequestMethod.GET, RequestMethod.POST })
 	public @ResponseBody String salintiZaliava(@RequestParam(name="id", required=true, defaultValue="0") Integer id, Model model) {
 		

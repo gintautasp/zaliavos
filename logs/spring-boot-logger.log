@@ -1,0 +1,25 @@
+2021-07-26 14:25:02,958 INFO org.springframework.boot.StartupInfoLogger [main] Starting ZaliavosApplication using Java 16 on PC16 with PID 10244 (C:\Users\sesioliktas\Desktop\mvnhello\zaliavos\target\classes started by sesioliktas in C:\Users\sesioliktas\Desktop\mvnhello\zaliavos)
+2021-07-26 14:25:02,961 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2021-07-26 14:25:04,628 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-07-26 14:25:04,805 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 163 ms. Found 4 JPA repository interfaces.
+2021-07-26 14:25:07,211 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 8080 (http)
+2021-07-26 14:25:07,311 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing ProtocolHandler ["http-nio-8080"]
+2021-07-26 14:25:07,312 INFO org.apache.juli.logging.DirectJDKLog [main] Starting service [Tomcat]
+2021-07-26 14:25:07,313 INFO org.apache.juli.logging.DirectJDKLog [main] Starting Servlet engine: [Apache Tomcat/9.0.48]
+2021-07-26 14:25:07,538 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing Spring embedded WebApplicationContext
+2021-07-26 14:25:07,539 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 4459 ms
+2021-07-26 14:25:08,464 INFO org.hibernate.jpa.internal.util.LogHelper [main] HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-07-26 14:25:08,706 INFO org.hibernate.Version [main] HHH000412: Hibernate ORM core version 5.4.32.Final
+2021-07-26 14:25:09,015 INFO org.hibernate.annotations.common.reflection.java.JavaReflectionManager [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2021-07-26 14:25:09,243 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Starting...
+2021-07-26 14:25:09,706 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Start completed.
+2021-07-26 14:25:09,786 INFO org.hibernate.dialect.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2021-07-26 14:25:11,504 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-07-26 14:25:11,514 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-07-26 14:25:12,370 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-07-26 14:25:13,864 INFO org.apache.juli.logging.DirectJDKLog [main] Starting ProtocolHandler ["http-nio-8080"]
+2021-07-26 14:25:14,242 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port(s): 8080 (http) with context path ''
+2021-07-26 14:25:14,274 INFO org.springframework.boot.StartupInfoLogger [main] Started ZaliavosApplication in 12.612 seconds (JVM running for 13.341)
+2021-07-26 14:25:35,181 INFO org.apache.juli.logging.DirectJDKLog [http-nio-8080-exec-2] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-07-26 14:25:35,182 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-2] Initializing Servlet 'dispatcherServlet'
+2021-07-26 14:25:35,187 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-2] Completed initialization in 1 ms
